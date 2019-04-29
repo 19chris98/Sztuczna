@@ -36,7 +36,7 @@ class BombaNr1:
             return 0
 class BombaNr2:
     def ProbaRoz(self,x):
-        if(int(x)==8):
+        if(int(x)==6):
             return 1
         else:
             return 0
