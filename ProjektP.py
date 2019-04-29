@@ -24,7 +24,7 @@ for i in range(0,8):
 print (b)
 class BombaNr0:
     def ProbaRoz(self,x):
-        if(int(x)==8):
+        if(int(x)==2):
             return 1
         else:
             return 0
@@ -36,7 +36,7 @@ class BombaNr1:
             return 0
 class BombaNr2:
     def ProbaRoz(self,x):
-        if(int(x)==6):
+        if(int(x)==3):
             return 1
         else:
             return 0
@@ -53,7 +53,6 @@ print(a[3])
 d=0
 for i in range (1,3):
 	for j in range (1,3):
-		print(i,j)
 		if a[i][j]==0:
 			bomb=BombaNr0()
 			if (b[0]==0):
