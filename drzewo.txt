@@ -1,0 +1,35 @@
+Is narzedzie >= 6?
+--> True:
+  Predict {'no': 12}
+--> False:
+  Is narzedzie >= 2?
+  --> True:
+    Is narzedzie >= 4?
+    --> True:
+      Is bomba >= 3?
+      --> True:
+        Is narzedzie >= 5?
+        --> True:
+          Predict {'yes': 1}
+        --> False:
+          Predict {'no': 1}
+      --> False:
+        Predict {'no': 6}
+    --> False:
+      Is bomba >= 3?
+      --> True:
+        Predict {'no': 2}
+      --> False:
+        Is narzedzie >= 3?
+        --> True:
+          Is bomba >= 1?
+          --> True:
+            Predict {'yes': 2}
+          --> False:
+            Predict {'no': 1}
+        --> False:
+          Is bomba >= 1?
+          --> True:
+            Predict {'no': 2}
+          --> False:
+            Predict {'yes': 1}
