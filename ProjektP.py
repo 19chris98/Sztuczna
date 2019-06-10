@@ -1,107 +1,98 @@
-print("3-gracz\n1-ściana\n0-puste pole\n4-7-bomby")
-a = [[1,1,1,1,1,1,1,1],
-     [1,3,1,0,0,0,0,1],
-     [1,0,0,0,0,4,1,1],
-     [1,0,0,1,1,1,9,1],
-     [1,0,1,0,1,0,0,1],
-     [1,0,0,7,0,0,0,1],
-     [1,0,1,4,1,5,1,1],
-     [1,1,1,1,1,1,1,1]
-     ]
-#klasy bomb
-class BombaNr0:
-    def ProbaRoz(self,x):
-        if(int(x)==2):
-            return 1
-        else:
-            return 0
-class BombaNr1:
-    def ProbaRoz(self,x):
-        if(int(x)==3):
-            return 1
-        else:
-            return 0
-class BombaNr2:
-    def ProbaRoz(self,x):
-        if(int(x)==3):
-            return 1
-        else:
-            return 0
-class BombaNr3:
-    def ProbaRoz(self,x):
-        if(int(x)==5):
-            return 1
-        else:
-            return 0
-
-#wypisanie planszy
-for i in range(0,8):
-    print(a[i])
-"""
-#rozbrajanie
-for i in range (1,7):
-	for j in range (1,7):
-		if a[i][j]==4:
-			bomb=BombaNr0()
-			if 
-		if a[i][j]==7:
-			bomb=BombaNr1()
-			for k in range (1,8):
-				if k>=6:
-					break;
+from scieżka import astar
+def main():
+	a = [[1,1,1,1,1,1,1,1],
+		 [1,1,1,0,1,3,5,1],
+		 [1,0,0,0,0,4,1,1],
+		 [1,0,0,1,1,1,0,1],
+		 [1,0,1,0,1,0,0,1],
+		 [1,0,0,0,0,1,0,1],
+		 [1,0,1,7,7,7,1,1],
+		 [1,1,1,1,1,1,1,1]
+		 ]
+	nowe=[0,0,0,0,0,0,0,0,0,0]
+	print(a[0])
+	print(a[1])
+	print(a[2])
+	print(a[3])
+	print(a[4])
+	print(a[5])
+	print(a[6])
+	print(a[7])
+	q=0
+	#petla do ilosci bomb
+	while q<4:
+		#ustalenie gdzie znajduje sie nasz robot
+		for i in range(0,7):
+			for j in range(0,7):
+				if(a[i][j]==3):
+					robot = (i, j)
+					iRobota = i
+					jRobota = j 
+		#wyszukiwanie od konca
+		for i in range(0,7):
+			for j in range(0,7):
+				if(a[i][j]==4 or a[i][j]==5 or a[i][j]==6 or a[i][j]==7):
+					finish = (i, j)
+					iBomby = i 
+					jBomby = j	
+		#zadeklarowanie temp
+		temp = [[0 for x in range(7)]for y in range(7)]
+		#tworzenie tymczasowej macierzy by dzialala z funkcja szukania a*(zmienienie bomb, '3' na 0 by dalo sie tam wchodzic i przechodzic )
+		for i in range(0,7):
+			for j in range(0,7):
+				if(a[i][j]==3 or a[i][j]==4 or a[i][j]==5 or a[i][j]==6 or a[i][j]==7):
+					temp[i][j]=0
 				else:
-					if k>=2:
-						if k>=4:
-							if a[i][j]>=3:
-								bomb.ProbaRoz(5)
-								a[i][j]=0
-						else:
-							if a[i][j]>=1:
-								bomb.ProbaRoz(3)
-								a[i][j]=0
-							else:
-								if a[i][j]==1:
-									bomb.ProbaRoz(2)
-									a[i][j]=0
-		if a[i][j]==5:
-			bomb=BombaNr2()
-			for k in range (1,8):
-				if k>=6:
-					break;
+					temp[i][j]=a[i][j]	
+		#uzycie funkcji chodzenia
+		print("start: "+str(robot))
+		print("finish: "+str(finish))
+		path = astar(temp, robot, finish)
+		print(path)
+		#tu proba rozbrojenia
+		if a[iBomby][jBomby] in [3,4,5,6,7]:
+			if a[iBomby][jBomby]>=5 and a[iBomby][jBomby]<7:
+				if a[iBomby][jBomby]>=6:
+					a[iBomby][jBomby] = 3
+					a[iRobota][jRobota] = 0
+					q=q+1
 				else:
-					if k>=2:
-						if k>=4:
-							if a[i][j]>=3:
-								bomb.ProbaRoz(5)
-								a[i][j]=0
+					a[iBomby][jBomby] = 3
+					a[iRobota][jRobota] = 0
+					q=q+1
+			if a[iBomby][jBomby]== 4:
+				a[iBomby][jBomby] = 3
+				a[iRobota][jRobota] = 0
+				q=q+1
+			if a[iBomby][jBomby]==7:
+				if nowe[a[iBomby][jBomby]]==0:
+					for i in range(1,9):
+						if i==1 or i==2 or i==3 or i==4 or i==6 or i==7 or i==8:
+							pass
 						else:
-							if a[i][j]>=1:
-								bomb.ProbaRoz(3)
-								a[i][j]=0
-							else:
-								if a[i][j]==1:
-									bomb.ProbaRoz(2)
-									a[i][j]=0
-		if a[i][j]==6:
-			bomb=BombaNr3()
-			for k in range (1,8):
-				if k>=6:
-					break;
+							a[iBomby][jBomby] = 3
+							a[iRobota][jRobota] = 0
+							print(i)
+							q=q+1
+							nowe[7]=1
+							print(nowe)
 				else:
-					if k>=2:
-						if k>=4:
-							if a[i][j]>=3:
-								bomb.ProbaRoz(5)
-								a[i][j]=0
-						else:
-							if a[i][j]>=1:
-								bomb.ProbaRoz(3)
-								a[i][j]=0
-							else:
-								if a[i][j]==1:
-									bomb.ProbaRoz(2)
-									a[i][j]=0
-"""
-#wypisanie planszy
-for i in range(0,8):
-    print(a[i])
+					a[iBomby][jBomby] = 3
+					a[iRobota][jRobota] = 0
+					q=q+1	
+		else:
+			print("niepoprawna zmienna")
+			pass
+						
+	#tu mozna zrobic przejscie robota do bazy i usunac ta "3" z macierzy wtedy zostanie tylko baza oraz "0" i "1"	
+	print("Pole minowe po zakończeniu z robotem nadal na polu")
+	print(a[0])
+	print(a[1])
+	print(a[2])
+	print(a[3])
+	print(a[4])
+	print(a[5])
+	print(a[6])
+	print(a[7])
+if __name__ == '__main__':
+    main()
